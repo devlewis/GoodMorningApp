@@ -2,16 +2,47 @@
     box-sizing: border-box;
   }
   
-  body {
-    font-family: 'Roboto', sans-serif;
+  /* body {
+    
+  } */
+ 
+  header{
+    font-family:'Roboto', sans-serif; 
+    text-align: center;
+  } 
+
+  #input-section{
+    font-family: 'Kulim Park', sans-serif;
+    font-size: 2.5em;
+    text-align: left;
+    margin-left: 15%;
+    margin-right: 15%;
   }
-  
+
+  input#js-country, input#js-name{
+    font-size: .80em;
+    width: 100%;
+  }
+
+  input[type="submit"]{
+    display: block;
+    margin: auto;
+    font-size: .75em;
+    border: 2px solid black;
+    padding: 10px;
+  }
+
   button, input[type="text"] {
     padding: 5px;
+    font-family: 'Kulim Park', sans-serif;
   }
 
   button:hover {
     cursor: pointer;
+  }
+
+  section{
+    text-align: center;
   }
 
   p.small{

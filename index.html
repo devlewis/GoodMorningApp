@@ -5,20 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta description="an app that displays language and time of any country entered">
+    <link href="https://fonts.googleapis.com/css?family=Kulim+Park|Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
     <title>Good Morning In...</title>
 </head>
 <body>
-    <banner>Good Morning In...</banner>
+    <header class="center">Good Morning In...</header>
     <br></br>
+        <section id="input-section">
         <form id="js-form">
                 <label for="name">My name is</label>
+                <br>
                 <input type="text" name="name" id="js-name" placeholder="Sally" required>
+                <br></br>
                 <label for="country">and I want to wake up in:</label>
-                <input type="text" name="country" id="js-country" placeholder="United States" required>
-    
+                <br>
+                <input type="text" name="country" id="js-country" placeholder="Country ex. USA" required>
+                <br></br>
                 <input type="submit" value="Go!">
         </form>
+        </section>
 
         <p id="js-error-message" class="error-message"></p>
 
@@ -32,7 +38,7 @@
     </div>
     
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script src="index.js"></script>
+    <script src="index1.js"></script>
 
 </body>
 </html>
