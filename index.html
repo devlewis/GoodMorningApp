@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="yellow">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
 </head>
 <body>
     <img id="sun" src="images/sun.png" alt="sun">
-    <header class="center">Good Morning In...</header>
+    <header>Good Morning In...</header>
     <br></br>
         <section id="input-section">
         <form id="js-form">
@@ -21,9 +21,9 @@
                 <br></br>
                 <label for="country">and I want to wake up in:</label>
                 <br>
-                <input type="text" name="country" id="js-country" placeholder="Country ex. Japan" required>
+                <input type="text" name="country" id="js-country" placeholder="United States" required>
                 <br></br>
-                <input type="submit" value="Go!">
+                <input type="submit" id="gobutton" value="Go!">
         </form>
         </section>
 
@@ -36,7 +36,7 @@
         <section id="timeresults" class="hidden">
             
         </section>
-    </div>
+    <br></br>
     
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="index2.js"></script>

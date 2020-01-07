@@ -2,12 +2,12 @@
 
 function watchForm(){
   $('form').submit(event => {
-    $("body").removeClass("turnblue");
     event.preventDefault();
     const country = $('#js-country').val().toLowerCase().trim();
     console.log("in watchForm", country);
     getCountryFromApi(country);
     $("body").addClass("turnblue");
+    $("html").removeClass("yellow");
   });
 }
 
@@ -62,6 +62,7 @@ function restartButton(){
         $("#results").empty();
         $("#timeresults").empty();
         $("body").removeClass("turnblue");
+        $("html").addClass("yellow");
         $("#input-section").removeClass("hidden");
         document.getElementById("js-form").reset();
         }
@@ -110,7 +111,6 @@ function googleTranslate(countryData) {
 
    const data1 = {
     "q": ["Good Morning! My name is", "Good afternoon!", "Good evening!"],
-    "source": "en",
     "target": language
    } 
 
@@ -131,10 +131,10 @@ function googleTranslate(countryData) {
 
 function languageError(){
     $('#results').append(
-      `<p>Sorry, there's no translation for Bhutan's principal language, Dzongkha; 
+      `<p class="small">Sorry, there's no google translation for Bhutan's principal language, Dzongkha; 
       but you may be able to use Nepali phrases in Bhutan!</p>
       
-      <p>Nepali:</p>`
+      <p class="small">Nepali:</p>`
     )
 }
 
@@ -148,10 +148,12 @@ function findCountry(rawCountryData, country) {
       let countryCaps = country.split(" ");
           console.log("before if block", countryCaps)   
         if(countryCaps.length > 1){
-          countryCaps = countryCaps.forEach(item => item.toString().charAt(0).toUpperCase() + item.toString().slice(1));
+          countryCaps = countryCaps.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+          countryCaps = countryCaps.join(" ");
           console.log("in if block countryCaps", countryCaps);}
-        else{countryCaps = (countryCaps.toString().charAt(0).toUpperCase() + countryCaps.toString().slice(1))};  
-          console.log("in else block countryCaps", countryCaps);
+        else{countryCaps = (countryCaps.toString().charAt(0).toUpperCase() + countryCaps.toString().slice(1))
+          console.log("in else block countryCaps", countryCaps);};  
+          
 
       countryData = rawCountryData.find(({name}) => name === countryCaps)
   

@@ -7,12 +7,19 @@
     min-height: 100%;
     margin: 0;
     padding: 0;
-    background-image: linear-gradient(rgba(252, 215, 9, 0),rgba(255,0,0,0));
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     }
 
   html {
     height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
+
+  .yellow {
+    background-image: linear-gradient(rgba(255,0,0,0),rgb(252, 242, 107));
+  }
 
   #sun{
     width: 300px;
@@ -25,15 +32,13 @@
 
   header{
     text-align: center;
-    /* z-index: +1; */
    }
   
 
   #input-section{
-    font-family: 'Kulim Park', sans-serif;
     font-size: 2em;
     text-align: left;
-    margin-left: 15%;
+    margin-left: 12%;
     margin-right: 12%;
     padding: 90px 0;
   }
@@ -43,7 +48,8 @@
     width: 100%;
   }
 
-  input[type="submit"], button{
+  #gobutton {
+    background-color: rgb(255, 255, 255); 
     display: block;
     margin: auto;
     font-size: .9em;
@@ -52,7 +58,6 @@
   }
 
   button, input[type="text"] {
-    padding: 5px;
     font-family: 'Kulim Park', sans-serif;
   }
 
@@ -61,6 +66,9 @@
   }
 
   input[type="submit"], button.gtbutton{
+    display: block;
+    margin: auto;
+    border: 2px solid black;
     padding: 10px 5px;
     font-size: 20px;
   }
@@ -78,30 +86,15 @@
     text-align: center;
   }
 
+  #restart {
+    margin-bottom: 20px;
+  }
+
   p.small{
     font-size: 20px;
     text-align: center;
   }
 
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  li {
-    padding: 10px;
-  }
-  
-  li, img {
-    max-width: 500px;
-  }
-  
-  .container {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
   .error-message {
       color: red;
   }
@@ -113,3 +106,24 @@
   .turnblue {
     background-image: linear-gradient(rgba(255,0,0,0), rgb(104, 156, 224));
   }
+
+  @media screen and (min-width: 770px){
+    #input-section{
+      font-size: 4em;
+    }
+
+    header{
+      font-size: 2em;
+    }
+
+    #sun{
+      width: 550px;
+      margin-left: -275px;
+      position: absolute;
+      left: 50%;
+      top: -300px;
+      z-index: -1;
+    }
+
+    }
+  
