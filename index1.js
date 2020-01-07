@@ -4,6 +4,7 @@ function watchForm(){
   $('form').submit(event => {
     event.preventDefault();
     const country = $('#js-country').val();
+    debugger;
     getCountryFromApi(country);
   });
 }
@@ -47,12 +48,13 @@ function displayTranslationResults(translationResults) {
   console.log(translationResults);
 
   const name = $("#js-name").val();
-
+  $("#input-section").addClass("hidden");
   $("#results").empty();
   $("#results").append(
     `<p>${translationResults.data.translations[0].translatedText} ${name}!!!!!</p>`
   );
   $("#results").removeClass("hidden");
+  debugger;
 }
 
 
@@ -83,10 +85,10 @@ var geoCoding = translateData => {
   return request("https://maps.googleapis.com/maps/api/geocode/json?address="+countryCapital+"&components=country:"+countryCode+"&key=AIzaSyDumOtzsZBkWdtNzTDcdsVLKYJ6yJUtkks", options)
 }
 
-function googleTranslate(translateData) {
-   console.log(translateData);
-
-   let language = translateData[0].languages[0];
+function googleTranslate(countryDataFinal) {
+   console.log(countryDataFinal);
+    debugger;
+   let language = countryDataFinal.languages[0];
    console.log(language);
 
    const data1 = {
@@ -105,10 +107,62 @@ function googleTranslate(translateData) {
      
   return request("https://translation.googleapis.com/language/translate/v2?key=AIzaSyDumOtzsZBkWdtNzTDcdsVLKYJ6yJUtkks", options1)
     .then(translationResults => {
+      debugger;  
       displayTranslationResults(translationResults);
       return translationResults;    
     });
 }
+
+
+function findCountry(rawCountryData) {
+    const country1 = $('#js-country').val();
+  
+    if (typeof country1 !== 'string') { alert("Please enter a valid country name in English") }
+    else {
+      const countryCaps = country1.charAt(0).toUpperCase() + country1.slice(1);
+      const countryData = rawCountryData.find(({name}) => name === countryCaps)
+  
+    let language = countryData.languages[0];
+    console.log(language);
+  
+        if(language === "dz"){
+            languageError();
+            language = "ne";
+            console.log(language);
+            }
+        console.log(language);
+
+    let translateRes, geoCodeRes, timeZone1Res, timeZone2Res;
+
+    const googleTranslatePromise = googleTranslate(countryData)
+          .then(res => {
+            translateRes = res;
+          });
+    
+          debugger;
+
+    const geoCodingPromise = geoCoding(countryData)
+          .then(res => {
+            geoCodeRes = res;
+            return timeZone1(geoCodeRes);
+          })
+          .then(res => {
+            timeZone1Res = res;
+            return timeZone2(timeZone1Res);
+          })
+          .then(res => {
+            timeZone2Res = res;
+          })
+        
+        Promise.all([googleTranslatePromise, geoCodingPromise])
+          .then(() => {
+            let countryCapital = countryData[0].capital;
+            displayTimeResults(timeZone2Res,countryCapital,translateRes)
+          });
+    }
+    }
+
+
 
 //runs first, sends data to googleTranslate and geoCoding
 function getCountryFromApi(country) {
@@ -123,31 +177,8 @@ console.log(url);
 	"x-rapidapi-key": "ebaaafd4d3msh752c26791113a7fp144b54jsn7740997f5edd"
   })}
 
-  request(url, options).then((countryData) => {
-    let translateRes, geoCodeRes, timeZone1Res, timeZone2Res;
-
-    const googleTranslatePromise = googleTranslate(countryData)
-      .then(res => {
-        translateRes = res;
-      });
-    const geoCodingPromise = geoCoding(countryData)
-      .then(res => {
-        geoCodeRes = res;
-        return timeZone1(geoCodeRes);
-      })
-      .then(res => {
-        timeZone1Res = res;
-        return timeZone2(timeZone1Res);
-      })
-      .then(res => {
-        timeZone2Res = res;
-      })
-    
-    Promise.all([googleTranslatePromise, geoCodingPromise])
-      .then(() => {
-        let countryCapital = countryData[0].capital;
-        displayTimeResults(timeZone2Res,countryCapital,translateRes)
-      });
+  request(url, options).then(res => {
+    return findCountry(res);
   })
 }
 

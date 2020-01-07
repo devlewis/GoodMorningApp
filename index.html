@@ -10,6 +10,7 @@
     <title>Good Morning In...</title>
 </head>
 <body>
+    <img id="sun" src="images/sun.png" alt="sun">
     <header class="center">Good Morning In...</header>
     <br></br>
         <section id="input-section">
@@ -20,14 +21,14 @@
                 <br></br>
                 <label for="country">and I want to wake up in:</label>
                 <br>
-                <input type="text" name="country" id="js-country" placeholder="Country ex. USA" required>
+                <input type="text" name="country" id="js-country" placeholder="Country ex. Japan" required>
                 <br></br>
                 <input type="submit" value="Go!">
         </form>
         </section>
 
         <p id="js-error-message" class="error-message"></p>
-
+        <div id="language-error-message"></div>
         <section id="results" class="hidden">
 
         </section>
@@ -38,7 +39,7 @@
     </div>
     
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script src="index1.js"></script>
+    <script src="index2.js"></script>
 
 </body>
 </html>
