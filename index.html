@@ -11,7 +11,7 @@
 </head>
 <body>
     <img id="sun" src="images/sun.png" alt="sun">
-    <header>Good Morning In...</header>
+    <header class="centered">Good Morning In...</header>
     <br></br>
         <section id="input-section">
         <form id="js-form">
@@ -21,14 +21,18 @@
                 <br></br>
                 <label for="country">and I want to wake up in:</label>
                 <br>
-                <input type="text" name="country" id="js-country" placeholder="United States" required>
+                <input list="countries" type="text" name="country" id="js-country" placeholder="United States" required>
+                <datalist id="countries">
+                    <option value="Japan"></option>
+                    <option value="Japan"></option>
+
+                </datalist>
                 <br></br>
                 <input type="submit" id="gobutton" value="Go!">
         </form>
         </section>
 
         <p id="js-error-message" class="error-message"></p>
-        <div id="language-error-message"></div>
         <section id="results" class="hidden">
 
         </section>

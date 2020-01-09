@@ -1,129 +1,133 @@
 * {
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Kulim Park', sans-serif;
-    min-height: 100%;
-    margin: 0;
-    padding: 0;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    }
-
-  html {
-    height: 100%;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+  box-sizing: border-box;
 }
 
-  .yellow {
-    background-image: linear-gradient(rgba(255,0,0,0),rgb(252, 242, 107));
+body {
+  font-family: "Kulim Park", sans-serif;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+html {
+  height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.yellow {
+  background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 246, 126));
+}
+
+#sun {
+  width: 300px;
+  margin-left: -150px;
+  position: absolute;
+  left: 50%;
+  top: -175px;
+  z-index: -1;
+}
+
+#input-section {
+  font-size: 2em;
+  text-align: left;
+  margin-left: 12%;
+  margin-right: 12%;
+  padding: 90px 0;
+}
+
+input#js-country,
+input#js-name {
+  font-size: 0.95em;
+  width: 100%;
+}
+
+#gobutton {
+  background-color: black;
+  color: rgb(255, 246, 126);
+  display: block;
+  margin: auto;
+  font-size: 0.9em;
+  padding: 10px 30px 10px 30px;
+}
+
+button,
+input[type="text"] {
+  font-family: "Kulim Park", sans-serif;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+input[type="submit"],
+button.gtbutton {
+  display: block;
+  margin: auto;
+  border: 2px solid black;
+  padding: 10px 5px;
+  font-size: 20px;
+}
+
+#results {
+  font-size: 2em;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+#timeresults {
+  padding: 30px 0 0 0;
+  margin-left: 15%;
+  margin-right: 15%;
+  text-align: center;
+}
+
+#restart {
+  margin-bottom: 20px;
+}
+
+p.small {
+  font-size: 20px;
+  text-align: center;
+}
+
+.error-message {
+  color: red;
+}
+
+.hidden {
+  display: none;
+}
+
+.centered {
+  text-align: center;
+}
+
+.turnblue {
+  background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(104, 156, 224));
+}
+
+@media screen and (min-width: 770px) {
+  #input-section {
+    font-size: 4em;
   }
 
-  #sun{
-    width: 300px;
-    margin-left: -150px;
+  #sun {
+    width: 550px;
+    margin-left: -275px;
     position: absolute;
     left: 50%;
-    top: -175px;
+    top: -300px;
     z-index: -1;
   }
 
-  header{
-    text-align: center;
-   }
-  
-
-  #input-section{
+  header {
     font-size: 2em;
-    text-align: left;
-    margin-left: 12%;
-    margin-right: 12%;
-    padding: 90px 0;
   }
 
-  input#js-country, input#js-name{
-    font-size: .95em;
-    width: 100%;
-  }
-
-  #gobutton {
-    background-color: rgb(255, 255, 255); 
-    display: block;
-    margin: auto;
-    font-size: .9em;
-    border: 2px solid black;
-    padding: 10px 30px 10px 30px;
-  }
-
-  button, input[type="text"] {
-    font-family: 'Kulim Park', sans-serif;
-  }
-
-  button:hover {
-    cursor: pointer;
-  }
-
-  input[type="submit"], button.gtbutton{
-    display: block;
-    margin: auto;
-    border: 2px solid black;
-    padding: 10px 5px;
-    font-size: 20px;
-  }
-
-  #results {
-    font-size: 2em;
-    margin-left: 15%;
-    margin-right: 15%;
-  }
-
-  #timeresults {
-    padding: 30px 0 0 0; 
-    margin-left: 15%;
-    margin-right: 15%;
+  #response {
     text-align: center;
   }
-
-  #restart {
-    margin-bottom: 20px;
-  }
-
-  p.small{
-    font-size: 20px;
-    text-align: center;
-  }
-
-  .error-message {
-      color: red;
-  }
-  
-  .hidden {
-    display: none;
-  }
-
-  .turnblue {
-    background-image: linear-gradient(rgba(255,0,0,0), rgb(104, 156, 224));
-  }
-
-  @media screen and (min-width: 770px){
-    #input-section{
-      font-size: 4em;
-    }
-
-    header{
-      font-size: 2em;
-    }
-
-    #sun{
-      width: 550px;
-      margin-left: -275px;
-      position: absolute;
-      left: 50%;
-      top: -300px;
-      z-index: -1;
-    }
-
-    }
-  
+}
