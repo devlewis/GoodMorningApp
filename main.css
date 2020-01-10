@@ -31,17 +31,21 @@ html {
 }
 
 #input-section {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 25px 0;
   font-size: 2em;
-  text-align: left;
   margin-left: 12%;
   margin-right: 12%;
-  padding: 90px 0;
 }
 
-input#js-country,
-input#js-name {
+input[type="text"] {
+  font-family: "Kulim Park", sans-serif;
   font-size: 0.95em;
   width: 100%;
+  margin: 8px 0 30px;
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0);
 }
 
 #gobutton {
@@ -51,11 +55,6 @@ input#js-name {
   margin: auto;
   font-size: 0.9em;
   padding: 10px 30px 10px 30px;
-}
-
-button,
-input[type="text"] {
-  font-family: "Kulim Park", sans-serif;
 }
 
 button:hover {
@@ -90,11 +89,14 @@ button.gtbutton {
 
 p.small {
   font-size: 20px;
-  text-align: center;
 }
 
 .error-message {
   color: red;
+  margin-top: 20px;
+  margin-left: 12%;
+  margin-right: 12%;
+  font-size: 1em;
 }
 
 .hidden {
@@ -111,20 +113,38 @@ p.small {
 
 @media screen and (min-width: 770px) {
   #input-section {
-    font-size: 4em;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    font-size: 2.5em;
+    margin: 50px 12% 0 12%;
   }
 
+  input[type="text"][name="name"] {
+    width: 200px;
+  }
+
+  input[type="text"][name="country"] {
+    width: auto;
+  }
+
+  /* needs to be a bigger min-width 
+  
+  #gobutton {
+    margin-right: 0;
+  } */
+
   #sun {
-    width: 550px;
-    margin-left: -275px;
+    width: 500px;
+    margin-left: -250px;
     position: absolute;
     left: 50%;
-    top: -300px;
+    top: -310px;
     z-index: -1;
   }
 
   header {
-    font-size: 2em;
+    font-size: 1.5em;
   }
 
   #response {

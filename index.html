@@ -12,27 +12,23 @@
 <body>
     <img id="sun" src="images/sun.png" alt="sun">
     <header class="centered">Good Morning In...</header>
-    <br></br>
+    <p id="js-error-message" class="error-message"></p>
         <section id="input-section">
         <form id="js-form">
+            <div>
                 <label for="name">My name is</label>
-                <br>
                 <input type="text" name="name" id="js-name" placeholder="Sally" required>
-                <br></br>
+            </div>
+            <div>
                 <label for="country">and I want to wake up in:</label>
-                <br>
-                <input list="countries" type="text" name="country" id="js-country" placeholder="United States" required>
+                <input list="countries" type="text" name="country" id="js-country" placeholder="Japan" required>
                 <datalist id="countries">
-                    <option value="Japan"></option>
-                    <option value="Japan"></option>
-
                 </datalist>
-                <br></br>
+            </div>
                 <input type="submit" id="gobutton" value="Go!">
         </form>
         </section>
 
-        <p id="js-error-message" class="error-message"></p>
         <section id="results" class="hidden">
 
         </section>
