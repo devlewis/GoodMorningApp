@@ -4,11 +4,20 @@
 
 body {
   font-family: "Kulim Park", sans-serif;
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
+}
+
+.first-background {
+  background-image: url("images/blurry-sunrise.jpg");
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-size: 100% 100%;
+  background-position: 100% 100%;
+}
+
+.second-background {
+  background-image: url("images/bluesky-grass.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
 }
 
 html {
@@ -17,7 +26,7 @@ html {
   background-attachment: fixed;
 }
 
-.yellow {
+/* .yellow {
   background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 246, 126));
 }
 
@@ -28,47 +37,81 @@ html {
   left: 50%;
   top: -175px;
   z-index: -1;
-}
+} */
 
 #input-section {
+  padding: 25px 0;
+  margin-top: 40%;
+  font-size: 2em;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+#js-form {
   flex-direction: column;
   align-items: stretch;
-  padding: 25px 0;
-  font-size: 2em;
-  margin-left: 12%;
-  margin-right: 12%;
 }
 
 input[type="text"] {
+  border: none;
+  animation: blink-empty 1s infinite;
+  border-left: transparent solid 3px;
   font-family: "Kulim Park", sans-serif;
   font-size: 0.95em;
+  margin: 8px 3px 40px;
   width: 100%;
-  margin: 8px 0 30px;
-  display: inline-block;
+  display: block;
   background-color: rgba(255, 255, 255, 0);
 }
 
-#gobutton {
-  background-color: black;
-  color: rgb(255, 246, 126);
-  display: block;
-  margin: auto;
-  font-size: 0.9em;
-  padding: 10px 30px 10px 30px;
+@keyframes blink-empty {
+  50% {
+    border-left: 3px solid #333;
+  }
 }
 
-button:hover {
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 1; /* Firefox */
+  padding-left: 3px;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: white;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: white;
+}
+
+#gobutton {
+  background-color: #051b54;
+  color: white;
+  display: block;
+  border-radius: 3%;
+  margin-left: 0;
+  font-size: 0.9em;
+  padding: 10px 40px 10px 40px;
+}
+
+#gobutton:hover {
   cursor: pointer;
+  background-color: white;
+  color: black;
 }
 
 input[type="submit"],
 button.gtbutton {
   display: block;
+  border-radius: 3%;
   margin: auto;
   border: 2px solid black;
   padding: 10px 5px;
   font-size: 20px;
-  background-color: rgb(255, 248, 154)
+  background-color: whitesmoke;
 }
 
 #results {
@@ -108,17 +151,18 @@ p.small {
   text-align: center;
 }
 
-.turnblue {
-  background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(104, 156, 224));
+footer {
+  display: none;
 }
 
-@media screen and (min-width: 770px) {
+@media screen and (min-width: 500px) {
+  #gobutton {
+    margin-left: 0;
+  }
+
   #input-section {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
     font-size: 2.5em;
-    margin: 50px 12% 0 12%;
+    margin: 15% 15% 0 15%;
   }
 
   input[type="text"][name="name"] {
@@ -128,12 +172,6 @@ p.small {
   input[type="text"][name="country"] {
     width: auto;
   }
-
-  /* needs to be a bigger min-width 
-  
-  #gobutton {
-    margin-right: 0;
-  } */
 
   #sun {
     width: 500px;
@@ -150,5 +188,47 @@ p.small {
 
   #response {
     text-align: center;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  footer {
+    text-align: center;
+    display: block;
+    position: fixed;
+    bottom: 0;
+    margin-left: 20%;
+    margin-right: 20%;
+    padding-bottom: 30px;
+  }
+
+  #gobutton {
+    margin: auto;
+  }
+
+  footer {
+    margin-left: 30%;
+    margin-right: 30%;
+  }
+
+  #js-form > div {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+  }
+
+  input[type="text"][name="name"] {
+    margin: 1px 0 40px 12px;
+  }
+
+  input[type="text"][name="country"] {
+    margin: 1px 0 40px 12px;
+  }
+
+  #input-section {
+    font-size: 1.5em;
+    margin-left: 18%;
+    margin-right: 18%;
+    margin-top: 15%;
   }
 }
