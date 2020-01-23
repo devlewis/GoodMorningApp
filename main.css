@@ -26,19 +26,6 @@ html {
   background-attachment: fixed;
 }
 
-/* .yellow {
-  background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 246, 126));
-}
-
-#sun {
-  width: 300px;
-  margin-left: -150px;
-  position: absolute;
-  left: 50%;
-  top: -175px;
-  z-index: -1;
-} */
-
 #input-section {
   padding: 25px 0;
   margin-top: 40%;
@@ -112,6 +99,12 @@ button.gtbutton {
   padding: 10px 5px;
   font-size: 20px;
   background-color: whitesmoke;
+}
+
+button.gtbutton:hover {
+  cursor: pointer;
+  background-color: rgb(113, 166, 50);
+  color: white;
 }
 
 #results {
