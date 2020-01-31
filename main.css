@@ -26,10 +26,16 @@ html {
   background-attachment: fixed;
 }
 
+header {
+  font-size: 1.25em;
+  padding-top: 15px;
+}
+
 #input-section {
   padding: 25px 0;
-  margin-top: 40%;
-  font-size: 2em;
+  margin-top: 20%;
+  margin-bottom: 20%;
+  font-size: 1.75em;
   margin-left: 15%;
   margin-right: 15%;
 }
@@ -145,8 +151,31 @@ p.small {
 }
 
 footer {
-  display: none;
+  margin: 68% 15px 10px
 }
+
+
+@media screen and (min-width: 321px){
+  header {
+    font-size: 1.5em;
+    padding-top: 15px;
+  }
+
+  #input-section {
+    padding: 25px 0;
+    margin-top: 35%;
+    font-size: 2em;
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+}
+
+@media screen and (min-width: 412px){
+footer {
+  margin: 160px 15px 10px
+}
+
+
 
 @media screen and (min-width: 500px) {
   #gobutton {
@@ -184,24 +213,24 @@ footer {
   }
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 768px)
+{
   footer {
-    text-align: center;
     display: block;
     position: fixed;
     bottom: 0;
+    margin-top: 20px;
     margin-left: 20%;
     margin-right: 20%;
+    padding-top: 30px;
     padding-bottom: 30px;
   }
+}
+
+@media screen and (min-width: 900px) {
 
   #gobutton {
     margin: auto;
-  }
-
-  footer {
-    margin-left: 30%;
-    margin-right: 30%;
   }
 
   #js-form > div {
@@ -224,4 +253,22 @@ footer {
     margin-right: 18%;
     margin-top: 15%;
   }
+}
+}
+
+@media screen and (min-width: 1024px) and (min-height: 1366px)
+{
+  #input-section {
+    font-size: 2em;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 30%;
+  }
+
+  footer {
+    font-size: 1.5em;
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+
 }
