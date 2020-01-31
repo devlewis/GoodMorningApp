@@ -45,10 +45,13 @@ header {
   align-items: stretch;
 }
 
-input[type="text"] {
-  border: none;
-  animation: blink-empty 1s infinite;
+
+  input[type="text"] {
   border-left: transparent solid 3px;
+  border-color: #00B0D9 ;
+  border-top: none;
+  border-right: none;
+  border-bottom-color: white;
   font-family: "Kulim Park", sans-serif;
   font-size: 0.95em;
   margin: 8px 3px 40px;
@@ -57,9 +60,13 @@ input[type="text"] {
   background-color: rgba(255, 255, 255, 0);
 }
 
+.cursor {
+  animation: blink-empty 1s infinite;
+}
+
 @keyframes blink-empty {
   50% {
-    border-left: 3px solid #333;
+    border-left: 3px solid black;
   }
 }
 
@@ -188,7 +195,7 @@ footer {
   }
 
   input[type="text"][name="name"] {
-    width: 200px;
+    width: auto;
   }
 
   input[type="text"][name="country"] {
