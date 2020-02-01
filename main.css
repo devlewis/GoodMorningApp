@@ -165,7 +165,7 @@ footer {
   display: none;
 }
 
-@media screen and (min-height: 471px) {
+@media screen and (min-height: 555px) {
   footer {
     display: block;
     margin: 68% 15px 10px;
