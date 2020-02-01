@@ -17,11 +17,11 @@
         <form id="js-form">
             <div>
                 <label for="js-name">My name is</label>
-                <input type="text" name="name" id="js-name" placeholder="Sally" class="cursor" required>
+                <input type="text" name="name" id="js-name" oninput="removeCursorName()" placeholder="Sally" class="cursor" required>
             </div>
             <div>
                 <label for="js-country">and I want to wake up in</label>
-                <input list="countries" type="text" name="country" id="js-country" placeholder="Japan" class="cursor" required>
+                <input list="countries" type="text" name="country" id="js-country" oninput="removeCursorCountry()" placeholder="Japan" class="cursor" required>
                 <datalist id="countries">
                 </datalist>
             </div>
@@ -36,10 +36,10 @@
         <section id="timeresults" class="hidden">
             
         </section>
-    
+    </main>
     <footer>Made by Devree Lewis. Version #1 of this app uses GoogleTranslate API, RestCountries API, GoogleMapsGeocoding API, GoogleMapsTimeZone API, and WorldTimeAPI to display several greeting phrases in each country's principal language, the country's capital city, and the capital city's current time.</footer>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="index.js"></script>
-    </main>
+    
 </body>
 </html>

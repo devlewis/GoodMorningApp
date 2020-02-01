@@ -134,11 +134,10 @@ button.gtbutton:hover {
   padding: 30px 0 0 0;
   margin-left: 15%;
   margin-right: 15%;
-  text-align: center;
 }
 
 #restart {
-  margin-bottom: 20px;
+  margin-bottom: 60px;
 }
 
 p.small {
@@ -147,10 +146,11 @@ p.small {
 
 .error-message {
   color: red;
-  margin-top: 20px;
+  background: white;
+  margin-top: 100px;
   margin-left: 12%;
   margin-right: 12%;
-  font-size: 1em;
+  font-size: 1.2em;
 }
 
 .hidden {
@@ -162,9 +162,14 @@ p.small {
 }
 
 footer {
-  display: flex;
-  align-items: center;
-  background: white;
+  display: none;
+}
+
+@media screen and (min-height: 471px){
+  footer {
+    display: block;
+    margin: 68% 15px 10px;
+  }
 }
 
 @media screen and (min-width: 321px) {
@@ -181,6 +186,11 @@ footer {
     margin-right: 15%;
   }
 }
+
+@media screen and (min-width: 412px) {
+  footer {
+    margin: 160px 15px 10px;
+  }
 
   @media screen and (min-width: 500px) {
     #gobutton {
@@ -214,24 +224,23 @@ footer {
     }
 
     #response {
-      text-align: center;
+      display: block;
+    margin-block-start: 0.2em;
+    margin-block-end: 0.2em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
     }
   }
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 900px){
     footer {
-      display: block;
       position: fixed;
       bottom: 0;
       margin-top: 20px;
       margin-left: 20%;
       margin-right: 20%;
-      padding-top: 30px;
-      padding-bottom: 30px;
     }
-  }
 
-  @media screen and (min-width: 900px) {
     #gobutton {
       margin: auto;
     }
@@ -252,10 +261,16 @@ footer {
 
     #input-section {
       font-size: 1.5em;
-      margin-left: 18%;
-      margin-right: 18%;
-      margin-top: 15%;
+      margin: 10% 18% 0;
     }
+  }
+}
+
+
+@media screen and (min-width: 1024px)
+{
+  #input-section {
+    margin-top: 5%;
   }
 }
 
@@ -269,5 +284,7 @@ footer {
 
   footer {
     font-size: 1.5em;
+    margin-left: 15%;
+    margin-right: 15%;
   }
 }
