@@ -269,7 +269,7 @@ function getCountryFromApi(country) {
       $("#js-error-message").append(err.message);
     });
 }
-
+//
 //returns all countries in REST Countries API database, for use in input drop-down list
 function getAllCountries() {
   const url = "https://restcountries-v1.p.rapidapi.com/all";
