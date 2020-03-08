@@ -126,7 +126,7 @@ let timeZoneApi1 = geoCode => {
       long +
       "&timestamp=" +
       timeStampShort +
-      `&key=${GOOGLE_API_TOKEN}`
+      `&key=${process.env.GOOGLE_API_TOKEN}`
   );
 };
 
@@ -141,7 +141,7 @@ let geoCodeCapitalApi = translateData => {
       countryCapital +
       "&components=country:" +
       countryCode +
-      `&key=${GOOGLE_API_TOKEN}`,
+      `&key=${process.env.GOOGLE_API_TOKEN}`,
     options
   );
 };
@@ -169,7 +169,7 @@ function googleTranslateApi(countryData) {
   };
 
   return request(
-    `https://translation.googleapis.com/language/translate/v2?key=${GOOGLE_API_TOKEN}`,
+    `https://translation.googleapis.com/language/translate/v2?key=${process.env.GOOGLE_API_TOKEN}`,
     options1
   ).then(translationResults => {
     displayTranslationResults(translationResults, countryData, language);
@@ -217,7 +217,7 @@ function getCountryFromApi(country) {
   const options = {
     headers: new Headers({
       "x-rapidapi-host": "restcountries-v1.p.rapidapi.com",
-      "x-rapidapi-key": "COUNTRIES_API_TOKEN"
+      "x-rapidapi-key": process.env.COUNTRIES_API_TOKEN
     })
   };
 
@@ -277,7 +277,7 @@ function getAllCountries() {
   const options = {
     headers: new Headers({
       "x-rapidapi-host": "restcountries-v1.p.rapidapi.com",
-      "x-rapidapi-key": "COUNTRIES_API_TOKEN"
+      "x-rapidapi-key": process.env.COUNTRIES_API_TOKEN
     })
   };
   fetch(url, options)
