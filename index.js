@@ -1,12 +1,9 @@
 "use strict";
 
 function watchForm() {
-  $("form").submit(event => {
+  $("form").submit((event) => {
     event.preventDefault();
-    const country = $("#js-country")
-      .val()
-      .toLowerCase()
-      .trim();
+    const country = $("#js-country").val().toLowerCase().trim();
     getCountryFromApi(country);
     $("#js-error-message").empty();
   });
@@ -44,6 +41,10 @@ let displayTimeResults = (
   countryName,
   translationResults
 ) => {
+  console.log(longFormTime);
+  console.log(countryCapital);
+  console.log(countryName);
+  console.log(translationResults);
   let actualTime = longFormTime.datetime;
   let actualTimeString = actualTime.toString();
   let actualTimeShort = actualTimeString.substring(11, 16);
@@ -70,7 +71,7 @@ let displayTimeResults = (
 
 //3. clears form and restarts app, re-populating the name input
 function restartButton() {
-  $("#restart").click(event => {
+  $("#restart").click((event) => {
     event.preventDefault();
     $("#results").empty();
     $("#timeresults").empty();
@@ -81,15 +82,20 @@ function restartButton() {
     $("body").removeClass("centered");
     $("footer").removeClass("hidden");
     $("#js-name").val(name);
-    $("#js-country")
-      .val("")
-      .addClass("cursor");
+    $("#js-country").val("").addClass("cursor");
   });
 }
 
 //4. full list of countries from REST countries API for country select
 function makeCountryList(responseJson) {
-  let countryList = responseJson.forEach(item =>
+  let countryList = responseJson.filter(
+    (country) =>
+      country.name !== "Antarctica" &&
+      country.name !== "Nauru" &&
+      country.name !== "Faroe Islands" &&
+      country.name !== "Åland Islands"
+  );
+  countryList = countryList.forEach((item) =>
     $("#countries").append(`<option value="${item.name}">`)
   );
   return countryList;
@@ -107,41 +113,32 @@ function removeCursorCountry() {
 /////////API fetch functions///////////
 
 //takes timezone of capital city from timeZoneApi1 and returns current time in that zone
-let timeZoneApi2 = timeZoneName => {
+let timeZoneApi2 = (timeZoneName) => {
   let timeZone = timeZoneName.timeZoneId;
   return request("https://worldtimeapi.org/api/timezone/" + timeZone);
 };
 
 //takes lat/long of capital city from geoCodeCapitalAPI and returns timezone of city
-let timeZoneApi1 = geoCode => {
+let timeZoneApi1 = (geoCode) => {
+  console.log("reached timeZoneApi1");
   let lat = geoCode.results[0].geometry.location.lat;
   let long = geoCode.results[0].geometry.location.lng;
   const timeStamp = Date.now();
   const timeStampString = timeStamp.toString();
   let timeStampShort = timeStampString.substring(0, timeStampString.length - 3);
   return request(
-    "https://maps.googleapis.com/maps/api/timezone/json?location=" +
-      lat +
-      "," +
-      long +
-      "&timestamp=" +
-      timeStampShort +
-      `&key=${process.env.GOOGLE_API_TOKEN}`
+    `https://agile-oasis-81673.herokuapp.com/api/lat/${lat}/long/${long}/timeStampShort/${timeStampShort}`
   );
 };
 
 //takes name of country's capital city and returns lat/long
-let geoCodeCapitalApi = translateData => {
+let geoCodeCapitalApi = (translateData) => {
   let countryCapital = translateData.capital;
   let countryCode = translateData.alpha2Code;
   let options = [];
 
   return request(
-    "https://maps.googleapis.com/maps/api/geocode/json?address=" +
-      countryCapital +
-      "&components=country:" +
-      countryCode +
-      `&key=${process.env.GOOGLE_API_TOKEN}`,
+    `https://agile-oasis-81673.herokuapp.com/api/countryCapital/${countryCapital}/countryCode/${countryCode}`,
     options
   );
 };
@@ -157,21 +154,21 @@ function googleTranslateApi(countryData) {
 
   const data1 = {
     q: ["Good Morning! My name is", "Good afternoon!", "Good evening!"],
-    target: language
+    target: language,
   };
 
   const options1 = {
     headers: new Headers({
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     }),
     method: "POST",
-    body: JSON.stringify(data1)
+    body: JSON.stringify(data1),
   };
 
   return request(
-    `https://translation.googleapis.com/language/translate/v2?key=${process.env.GOOGLE_API_TOKEN}`,
+    `https://agile-oasis-81673.herokuapp.com/api/gt`,
     options1
-  ).then(translationResults => {
+  ).then((translationResults) => {
     displayTranslationResults(translationResults, countryData, language);
     return translationResults;
   });
@@ -212,42 +209,39 @@ function findCountry(rawCountryData, country) {
 //triggers promise chain of the other API fetch functions
 
 function getCountryFromApi(country) {
-  const url = "https://restcountries-v1.p.rapidapi.com/name/" + country;
+  const url = `https://agile-oasis-81673.herokuapp.com/api/country/${country}`;
 
-  const options = {
-    headers: new Headers({
-      "x-rapidapi-host": "restcountries-v1.p.rapidapi.com",
-      "x-rapidapi-key": process.env.COUNTRIES_API_TOKEN
-    })
-  };
-
-  request(url, options)
-    .then(rawCountryData => {
+  request(url)
+    .then((rawCountryData) => {
       let translateRes, geoCodeRes, timeZone1Res, timeZone2Res;
 
       let countryData = findCountry(rawCountryData, country);
 
+      console.log(countryData);
       $("html").removeClass("first-background");
       $("html").addClass("second-background");
 
       const googleTranslatePromise = googleTranslateApi(countryData).then(
-        res => {
+        (res) => {
           translateRes = res;
           console.log(res);
         }
       );
 
       const geoCodingPromise = geoCodeCapitalApi(countryData)
-        .then(res => {
+        .then((res) => {
           geoCodeRes = res;
+          console.log(geoCodeRes);
           return timeZoneApi1(geoCodeRes);
         })
-        .then(res => {
+        .then((res) => {
           timeZone1Res = res;
+          console.log(timeZone1Res);
           return timeZoneApi2(timeZone1Res);
         })
-        .then(res => {
+        .then((res) => {
           timeZone2Res = res;
+          console.log(timeZone2Res);
         });
 
       Promise.all([googleTranslatePromise, geoCodingPromise]).then(() => {
@@ -265,29 +259,23 @@ function getCountryFromApi(country) {
         $("footer").addClass("hidden");
       });
     })
-    .catch(err => {
+    .catch((err) => {
       $("#js-error-message").append(err.message);
     });
 }
 //
 //returns all countries in REST Countries API database, for use in input drop-down list
 function getAllCountries() {
-  const url = "https://restcountries-v1.p.rapidapi.com/all";
+  const url = `https://agile-oasis-81673.herokuapp.com/api/countries/all`;
 
-  const options = {
-    headers: new Headers({
-      "x-rapidapi-host": "restcountries-v1.p.rapidapi.com",
-      "x-rapidapi-key": process.env.COUNTRIES_API_TOKEN
-    })
-  };
-  fetch(url, options)
-    .then(res => res.json())
-    .then(responseJson => console.log(responseJson));
+  fetch(url)
+    .then((res) => res.json())
+    .then((responseJson) => makeCountryList(responseJson));
 }
 
 //general request fetch function used in all API functions
 function request(url, options) {
-  return fetch(url, options).then(res1 => {
+  return fetch(url, options).then((res1) => {
     //Error for being offline
     if (res1.status == 404) {
       $("#js-country").addClass("cursor");
