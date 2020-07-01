@@ -48,6 +48,18 @@ let displayTimeResults = (
   let actualTime = longFormTime.datetime;
   let actualTimeString = actualTime.toString();
   let actualTimeShort = actualTimeString.substring(11, 16);
+  if (Number(actualTimeString.substring(11, 13)) < 10) {
+    actualTimeShort = actualTimeShort.substring(1, 5) + "am";
+  } else if (Number(actualTimeString.substring(11, 13)) < 12) {
+    actualTimeShort = actualTimeShort + "am";
+  } else {
+    console.log(actualTimeShort.substring(0, 2));
+    actualTimeShort =
+      (Number(actualTimeShort.substring(0, 2)) - 12).toString() +
+      ":" +
+      actualTimeShort.substring(3, 5) +
+      "pm";
+  }
   if (countryCapital === "") {
     $("#timeresults").append(
       `<p class="small">It's actually ${actualTimeShort} in ${countryName}.</p>`
@@ -58,14 +70,25 @@ let displayTimeResults = (
            ${countryCapital}, capital city of ${countryName}.</p>`
     );
   }
-  $("#timeresults").append(
-    `<p class="small">Maybe you need:<br> 
-  ${translationResults.data.translations[1].translatedText}<br>(Good afternoon!)
-  <br>or</br> 
-  ${translationResults.data.translations[2].translatedText}<br>(Good evening!) ?</p>
-  <br></br>
-  <button class="gtbutton" id="restart">Wake up somewhere else!</button>`
-  );
+  if (
+    Number(actualTimeString.substring(11, 13)) > 12 &&
+    Number(actualTimeString.substring(11, 13)) < 17
+  ) {
+    $("#timeresults").append(
+      `<p class="small">Maybe you need:<br></br> 
+  ${translationResults.data.translations[1].translatedText}<br></br>(Good afternoon!)`
+    );
+  } else if (
+    Number(actualTimeString.substring(11, 13)) > 17 &&
+    Number(actualTimeString.substring(11, 13)) < 24
+  ) {
+    $("#timeresults").append(
+      `<p class="small">Maybe you need:<br></br> 
+      ${translationResults.data.translations[2].translatedText}<br></br>(Good evening!)</p>`
+    );
+  }
+  $("#timeresults").append(`<br></br>
+  <button class="gtbutton" id="restart">Wake up somewhere else!</button>`);
   $("#timeresults").removeClass("hidden");
 };
 
@@ -209,59 +232,73 @@ function findCountry(rawCountryData, country) {
 //triggers promise chain of the other API fetch functions
 
 function getCountryFromApi(country) {
-  const url = `https://agile-oasis-81673.herokuapp.com/api/country/${country}`;
+  if (
+    country.name !== "Antarctica" &&
+    country.name !== "Nauru" &&
+    country.name !== "Faroe Islands" &&
+    country.name !== "Åland Islands"
+  ) {
+    const url = `https://agile-oasis-81673.herokuapp.com/api/country/${country}`;
 
-  request(url)
-    .then((rawCountryData) => {
-      let translateRes, geoCodeRes, timeZone1Res, timeZone2Res;
+    request(url)
+      .then((rawCountryData) => {
+        let translateRes, geoCodeRes, timeZone1Res, timeZone2Res;
 
-      let countryData = findCountry(rawCountryData, country);
+        let countryData = findCountry(rawCountryData, country);
 
-      console.log(countryData);
-      $("html").removeClass("first-background");
-      $("html").addClass("second-background");
+        console.log(countryData);
+        $("html").removeClass("first-background");
+        $("html").addClass("second-background");
 
-      const googleTranslatePromise = googleTranslateApi(countryData).then(
-        (res) => {
-          translateRes = res;
-          console.log(res);
-        }
-      );
-
-      const geoCodingPromise = geoCodeCapitalApi(countryData)
-        .then((res) => {
-          geoCodeRes = res;
-          console.log(geoCodeRes);
-          return timeZoneApi1(geoCodeRes);
-        })
-        .then((res) => {
-          timeZone1Res = res;
-          console.log(timeZone1Res);
-          return timeZoneApi2(timeZone1Res);
-        })
-        .then((res) => {
-          timeZone2Res = res;
-          console.log(timeZone2Res);
-        });
-
-      Promise.all([googleTranslatePromise, geoCodingPromise]).then(() => {
-        $("body").addClass("centered");
-        let countryCapital = countryData.capital;
-        let countryName = countryData.name;
-        displayTimeResults(
-          timeZone2Res,
-          countryCapital,
-          countryName,
-          translateRes
+        const googleTranslatePromise = googleTranslateApi(countryData).then(
+          (res) => {
+            translateRes = res;
+            console.log(res);
+          }
         );
-        restartButton();
-        $("header").addClass("hidden");
-        $("footer").addClass("hidden");
+
+        const geoCodingPromise = geoCodeCapitalApi(countryData)
+          .then((res) => {
+            geoCodeRes = res;
+            console.log(geoCodeRes);
+            return timeZoneApi1(geoCodeRes);
+          })
+          .then((res) => {
+            timeZone1Res = res;
+            console.log(timeZone1Res);
+            return timeZoneApi2(timeZone1Res);
+          })
+          .then((res) => {
+            timeZone2Res = res;
+            console.log(timeZone2Res);
+          });
+
+        Promise.all([googleTranslatePromise, geoCodingPromise]).then(() => {
+          $("body").addClass("centered");
+          let countryCapital = countryData.capital;
+          let countryName = countryData.name;
+          displayTimeResults(
+            timeZone2Res,
+            countryCapital,
+            countryName,
+            translateRes
+          );
+          restartButton();
+          $("header").addClass("hidden");
+          $("footer").addClass("hidden");
+        });
+      })
+      .catch((err) => {
+        $("#js-error-message").append(
+          "Sorry, there was a problem. Please select a country from the drop-down list!" +
+            err.message
+        );
       });
-    })
-    .catch((err) => {
-      $("#js-error-message").append(err.message);
-    });
+  } else {
+    $("#js-error-message").append(
+      "Sorry, there was a problem. Please select a country from the drop-down list!"
+    );
+  }
 }
 //
 //returns all countries in REST Countries API database, for use in input drop-down list
