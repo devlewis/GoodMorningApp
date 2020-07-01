@@ -41,10 +41,6 @@ let displayTimeResults = (
   countryName,
   translationResults
 ) => {
-  console.log(longFormTime);
-  console.log(countryCapital);
-  console.log(countryName);
-  console.log(translationResults);
   let actualTime = longFormTime.datetime;
   let actualTimeString = actualTime.toString();
   let actualTimeShort = actualTimeString.substring(11, 16);
@@ -53,7 +49,6 @@ let displayTimeResults = (
   } else if (Number(actualTimeString.substring(11, 13)) < 12) {
     actualTimeShort = actualTimeShort + "am";
   } else {
-    console.log(actualTimeShort.substring(0, 2));
     actualTimeShort =
       (Number(actualTimeShort.substring(0, 2)) - 12).toString() +
       ":" +
@@ -143,7 +138,6 @@ let timeZoneApi2 = (timeZoneName) => {
 
 //takes lat/long of capital city from geoCodeCapitalAPI and returns timezone of city
 let timeZoneApi1 = (geoCode) => {
-  console.log("reached timeZoneApi1");
   let lat = geoCode.results[0].geometry.location.lat;
   let long = geoCode.results[0].geometry.location.lng;
   const timeStamp = Date.now();
@@ -246,31 +240,26 @@ function getCountryFromApi(country) {
 
         let countryData = findCountry(rawCountryData, country);
 
-        console.log(countryData);
         $("html").removeClass("first-background");
         $("html").addClass("second-background");
 
         const googleTranslatePromise = googleTranslateApi(countryData).then(
           (res) => {
             translateRes = res;
-            console.log(res);
           }
         );
 
         const geoCodingPromise = geoCodeCapitalApi(countryData)
           .then((res) => {
             geoCodeRes = res;
-            console.log(geoCodeRes);
             return timeZoneApi1(geoCodeRes);
           })
           .then((res) => {
             timeZone1Res = res;
-            console.log(timeZone1Res);
             return timeZoneApi2(timeZone1Res);
           })
           .then((res) => {
             timeZone2Res = res;
-            console.log(timeZone2Res);
           });
 
         Promise.all([googleTranslatePromise, geoCodingPromise]).then(() => {
