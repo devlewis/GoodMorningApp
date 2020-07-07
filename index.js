@@ -57,11 +57,11 @@ let displayTimeResults = (
   }
   if (countryCapital === "") {
     $("#timeresults").append(
-      `<p class="small">It's actually ${actualTimeShort} in ${countryName}.</p>`
+      `<p class="small">It's ${actualTimeShort} in ${countryName}.</p>`
     );
   } else {
     $("#timeresults").append(
-      `<p class="small">It's actually ${actualTimeShort} in
+      `<p class="small">It's ${actualTimeShort} in
            ${countryCapital}, capital city of ${countryName}.</p>`
     );
   }
@@ -138,8 +138,15 @@ let timeZoneApi2 = (timeZoneName) => {
 
 //takes lat/long of capital city from geoCodeCapitalAPI and returns timezone of city
 let timeZoneApi1 = (geoCode) => {
-  let lat = geoCode.results[0].geometry.location.lat;
-  let long = geoCode.results[0].geometry.location.lng;
+  let lat, long;
+  if (geoCode.length === 2) {
+    console.log("inside if!");
+    lat = geoCode[0];
+    long = geoCode[1];
+  } else {
+    lat = geoCode.results[0].geometry.location.lat;
+    long = geoCode.results[0].geometry.location.lng;
+  }
   const timeStamp = Date.now();
   const timeStampString = timeStamp.toString();
   let timeStampShort = timeStampString.substring(0, timeStampString.length - 3);
@@ -153,6 +160,13 @@ let geoCodeCapitalApi = (translateData) => {
   let countryCapital = translateData.capital;
   let countryCode = translateData.alpha2Code;
   let options = [];
+
+  if (countryCapital === "") {
+    console.log(translateData.latlng);
+    return new Promise((resolve) => {
+      resolve(translateData.latlng);
+    });
+  }
 
   return request(
     `https://agile-oasis-81673.herokuapp.com/api/countryCapital/${countryCapital}/countryCode/${countryCode}`,
@@ -226,69 +240,69 @@ function findCountry(rawCountryData, country) {
 //triggers promise chain of the other API fetch functions
 
 function getCountryFromApi(country) {
-  if (
-    country.name !== "Antarctica" &&
-    country.name !== "Nauru" &&
-    country.name !== "Faroe Islands" &&
-    country.name !== "Åland Islands"
-  ) {
-    const url = `https://agile-oasis-81673.herokuapp.com/api/country/${country}`;
-
-    request(url)
-      .then((rawCountryData) => {
-        let translateRes, geoCodeRes, timeZone1Res, timeZone2Res;
-
-        let countryData = findCountry(rawCountryData, country);
-
-        $("html").removeClass("first-background");
-        $("html").addClass("second-background");
-
-        const googleTranslatePromise = googleTranslateApi(countryData).then(
-          (res) => {
-            translateRes = res;
-          }
-        );
-
-        const geoCodingPromise = geoCodeCapitalApi(countryData)
-          .then((res) => {
-            geoCodeRes = res;
-            return timeZoneApi1(geoCodeRes);
-          })
-          .then((res) => {
-            timeZone1Res = res;
-            return timeZoneApi2(timeZone1Res);
-          })
-          .then((res) => {
-            timeZone2Res = res;
-          });
-
-        Promise.all([googleTranslatePromise, geoCodingPromise]).then(() => {
-          $("body").addClass("centered");
-          let countryCapital = countryData.capital;
-          let countryName = countryData.name;
-          displayTimeResults(
-            timeZone2Res,
-            countryCapital,
-            countryName,
-            translateRes
-          );
-          restartButton();
-          $("header").addClass("hidden");
-          $("footer").addClass("hidden");
-        });
-      })
-      .catch((err) => {
-        $("#js-error-message").append(
-          "Sorry, there was a problem. Please select a country from the drop-down list!" +
-            err.message
-        );
-      });
-  } else {
+  if (country === "faroe islands") {
     $("#js-error-message").append(
       "Sorry, there was a problem. Please select a country from the drop-down list!"
     );
+    throw new Error(
+      "Sorry, there was a problem. Please select a country from the drop-down list!"
+    );
   }
+
+  const url = `https://agile-oasis-81673.herokuapp.com/api/country/${country}`;
+
+  request(url)
+    .then((rawCountryData) => {
+      let translateRes, geoCodeRes, timeZone1Res, timeZone2Res;
+
+      let countryData = findCountry(rawCountryData, country);
+
+      $("html").removeClass("first-background");
+      $("html").addClass("second-background");
+
+      const googleTranslatePromise = googleTranslateApi(countryData).then(
+        (res) => {
+          translateRes = res;
+        }
+      );
+
+      const geoCodingPromise = geoCodeCapitalApi(countryData)
+        .then((res) => {
+          geoCodeRes = res;
+          return timeZoneApi1(geoCodeRes);
+        })
+        .then((res) => {
+          timeZone1Res = res;
+          return timeZoneApi2(timeZone1Res);
+        })
+        .then((res) => {
+          timeZone2Res = res;
+        });
+
+      Promise.all([googleTranslatePromise, geoCodingPromise]).then(() => {
+        $("body").addClass("centered");
+        let countryCapital = countryData.capital;
+        let countryName = countryData.name;
+        displayTimeResults(
+          timeZone2Res,
+          countryCapital,
+          countryName,
+          translateRes
+        );
+        restartButton();
+        $("header").addClass("hidden");
+        $("footer").addClass("hidden");
+      });
+    })
+    .catch((err) => {
+      $("#js-error-message").append(
+        "Sorry, there was a problem. Please select a country from the drop-down list! " +
+          err.message +
+          "."
+      );
+    });
 }
+
 //
 //returns all countries in REST Countries API database, for use in input drop-down list
 function getAllCountries() {
