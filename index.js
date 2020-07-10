@@ -28,7 +28,7 @@ function displayTranslationResults(translationResults, countryData, language) {
       <p class="small">"Good morning! My name is ${name}!"
           <br></br>
     <form action="https://translate.google.com/#view=home&op=translate&sl=en&tl=${language}" method="get" target="_blank">
-    <button type="submit" class="gtbutton">More Phrases to use in ${countryName}</button>`
+    <button type="submit" class="gtbutton">Find more phrases to use in ${countryName}</button>`
   );
   $("#results").removeClass("hidden");
 }
@@ -108,10 +108,7 @@ function restartButton() {
 function makeCountryList(responseJson) {
   let countryList = responseJson.filter(
     (country) =>
-      country.name !== "Antarctica" &&
-      country.name !== "Nauru" &&
-      country.name !== "Faroe Islands" &&
-      country.name !== "Åland Islands"
+      country.name !== "Faroe Islands" && country.name !== "Åland Islands"
   );
   countryList = countryList.forEach((item) =>
     $("#countries").append(`<option value="${item.name}">`)
