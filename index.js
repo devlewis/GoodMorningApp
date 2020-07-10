@@ -137,7 +137,6 @@ let timeZoneApi2 = (timeZoneName) => {
 let timeZoneApi1 = (geoCode) => {
   let lat, long;
   if (geoCode.length === 2) {
-    console.log("inside if!");
     lat = geoCode[0];
     long = geoCode[1];
   } else {
@@ -159,7 +158,6 @@ let geoCodeCapitalApi = (countryData) => {
   let options = [];
 
   if (countryCapital === "") {
-    console.log(countryData.latlng);
     return new Promise((resolve) => {
       resolve(countryData.latlng);
     });
