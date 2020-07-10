@@ -153,15 +153,15 @@ let timeZoneApi1 = (geoCode) => {
 };
 
 //takes name of country's capital city and returns lat/long
-let geoCodeCapitalApi = (translateData) => {
-  let countryCapital = translateData.capital;
-  let countryCode = translateData.alpha2Code;
+let geoCodeCapitalApi = (countryData) => {
+  let countryCapital = countryData.capital;
+  let countryCode = countryData.alpha2Code;
   let options = [];
 
   if (countryCapital === "") {
-    console.log(translateData.latlng);
+    console.log(countryData.latlng);
     return new Promise((resolve) => {
-      resolve(translateData.latlng);
+      resolve(countryData.latlng);
     });
   }
 
