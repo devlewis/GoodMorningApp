@@ -44,7 +44,9 @@ let displayTimeResults = (
   let actualTime = longFormTime.datetime;
   let actualTimeString = actualTime.toString();
   let actualTimeShort = actualTimeString.substring(11, 16);
-  if (Number(actualTimeString.substring(11, 13)) < 10) {
+  if (Number(actualTimeString.substring(11, 13)) === 0) {
+    actualTimeShort = "12" + ":" + actualTimeShort.substring(3, 5) + "am";
+  } else if (Number(actualTimeString.substring(11, 13)) < 10) {
     actualTimeShort = actualTimeShort.substring(1, 5) + "am";
   } else if (Number(actualTimeString.substring(11, 13)) < 12) {
     actualTimeShort = actualTimeShort + "am";
